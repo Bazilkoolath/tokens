@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./Generator.css";
+import { Box, TextField, Button, Typography, Grid } from '@mui/material';
 
 function Generator() {
   const [blueTokenCount, setBlueTokenCount] = useState('');
@@ -40,77 +40,111 @@ function Generator() {
       rows.push(tokens.slice(i, i + parseInt(perRow || tokens.length)));
     }
     return rows.map((row, index) => (
-      <div key={index} className="tokens-row">
+      <Box key={index} sx={{ display: 'flex', justifyContent: 'left', mb: 1 }}>
         {row.map((token, idx) => (
-          <div
+          <Box
             key={idx}
-            className={`token ${token.color}`}
+            sx={{
+              backgroundColor: token.color === 'blue' ? '#4a90e2' : '#d9534f',
+              color: 'white',
+              padding: '10px',
+              borderRadius: '4px',
+              marginRight: '5px',
+              fontWeight: 'bold',
+              minWidth: '60px',
+              textAlign: 'center',
+            }}
           >
             {token.label}
-          </div>
+          </Box>
         ))}
-      </div>
+      </Box>
     ));
   };
 
   return (
-    <div className="container">
-      <h1>Token Generator Application</h1>
-      <div className="input-group">
-        <label><b>Number Of Blue Tokens</b></label>
-        <input
+    <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 5, p: 3, bgcolor: 'white', borderRadius: '8px', boxShadow: 1 }}>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ textAlign: 'center' }}>
+        Token Generator Application
+      </Typography>
+      <Box sx={{ mb: 3 }}>
+        <TextField
+          fullWidth
+          label="Number Of Blue Tokens"
+          variant="outlined"
           type="number"
-          placeholder="Number Of Blue Tokens"
           value={blueTokenCount}
-          onChange={(e) => setBlueTokenCount(e.target.value)} />
-
-        <label><b>Blue Token Prefix</b></label>
-        <input
-          type="text"
-          placeholder="Blue Token Prefix"
+          onChange={(e) => setBlueTokenCount(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Blue Token Prefix"
+          variant="outlined"
           value={blueTokenPrefix}
-          onChange={(e) => setBlueTokenPrefix(e.target.value)}/>
-
-        <label><b>Blue Tokens Per Row</b></label>
-        <input
+          onChange={(e) => setBlueTokenPrefix(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Blue Tokens Per Row"
+          variant="outlined"
           type="number"
-          placeholder="Blue Tokens Per Row"
           value={blueTokensPerRow}
-          onChange={(e) => setBlueTokensPerRow(e.target.value)}/>
-
-        <label><b>Number Of Red Tokens</b></label>
-        <input
+          onChange={(e) => setBlueTokensPerRow(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Number Of Red Tokens"
+          variant="outlined"
           type="number"
-          placeholder="Number Of Red Tokens"
           value={redTokenCount}
-          onChange={(e) => setRedTokenCount(e.target.value)}/>
-
-        <label><b>Red Token Prefix</b></label>
-        <input
-          type="text"
-          placeholder="Red Token Prefix"
+          onChange={(e) => setRedTokenCount(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Red Token Prefix"
+          variant="outlined"
           value={redTokenPrefix}
-          onChange={(e) => setRedTokenPrefix(e.target.value)}/>
-
-        <label><b>Red Tokens Per Row</b></label>
-        <input
+          onChange={(e) => setRedTokenPrefix(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Red Tokens Per Row"
+          variant="outlined"
           type="number"
-          placeholder="Red Tokens Per Row"
           value={redTokensPerRow}
-          onChange={(e) => setRedTokensPerRow(e.target.value)}/>
-      </div>
+          onChange={(e) => setRedTokensPerRow(e.target.value)}
+          margin="normal"
+        />
+      </Box>
 
-      <div className="button-group">
-        <button onClick={handleGenerate}>Generate</button>
-        <button onClick={handleClear}>Clear</button>
-      </div>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={handleGenerate}>
+            Generate
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="outlined" color="secondary" onClick={handleClear}>
+            Clear
+          </Button>
+        </Grid>
+      </Grid>
 
-      <h2>Blue Tokens</h2>
+      <Typography variant="h5" component="h2" sx={{ mt: 4, color: '#4a90e2', textAlign: 'center' }}>
+        Blue Tokens
+      </Typography>
       {renderTokens(tokens.blue, blueTokensPerRow)}
 
-      <h2>Red Tokens</h2>
+      <Typography variant="h5" component="h2" sx={{ mt: 4, color: '#d9534f', textAlign: 'center' }}>
+        Red Tokens
+      </Typography>
       {renderTokens(tokens.red, redTokensPerRow)}
-    </div>
+    </Box>
   );
 }
 
